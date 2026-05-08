@@ -1,0 +1,45 @@
+<!-- Archivo: templates/teams/pitch.html -->
+<!-- Etiqueta: Plantilla de la pizarra interactiva -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pitch-container">
+    <div class="toolbar">
+        <h2>Mi Pizarra Interactiva</h2>
+        {% csrf_token %}
+        <select id="formation-select">
+            <option value="">Selecciona Formación</option>
+            {% for form in formations %}
+                <option value="{{ form.name }}">{{ form.name }}</option>
+            {% endfor %}
+        </select>
+        <button id="save-team-btn" class="btn">Guardar Plantilla</button>
+    </div>
+
+    <div class="soccer-pitch" id="pitch">
+        {% if players %}
+            {% for player in players %}
+                <div class="player-card" data-id="{{ player.id }}" style="left: {{ player.pitch_x }}%; top: {{ player.pitch_y }}%;">
+                    <img src="{{ player.photo.url }}" alt="{{ player.name }}" class="player-photo">
+                    <div class="player-info">
+                        <span class="player-name">{{ player.name }}</span>
+                        <span class="player-rating">{{ player.rating }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-pitch-msg">Agrega jugadores desde el menú lateral para comenzar.</p>
+        {% endif %}
+    </div>
+
+    <!-- Incluir el modal de edición de jugadores -->
+    {% include 'teams/player_modal.html' %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pitch.js' %}"></script>
+<script src="{% static 'js/drag_drop.js' %}"></script>
+{% endblock %}
