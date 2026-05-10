@@ -2,7 +2,7 @@
 // Etiqueta: Lógica de arrastrar y soltar (Drag & Drop) de jugadores
 
 document.addEventListener('DOMContentLoaded', () => {
-    const players = document.querySelectorAll('.player-card');
+    const players = document.querySelectorAll('.player-node');
     const pitch = document.getElementById('pitch');
 
     let isDragging = false;

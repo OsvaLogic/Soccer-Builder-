@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="home-container">
+    <div class="hero-section">
+        <h1>Bienvenido a Soccer Builder</h1>
+        <p>Arma tu equipo de ensueño, diseña tácticas y domina la cancha como un profesional.</p>
+        <div class="home-actions">
+            <a href="{% url 'teams:pitch' %}" class="btn btn-large">Crear Nueva Plantilla</a>
+            <a href="{% url 'teams:dashboard' %}" class="btn btn-large btn-secondary">Ver Mis Plantillas</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

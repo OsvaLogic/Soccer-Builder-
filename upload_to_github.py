@@ -23,7 +23,7 @@ def main():
 
     run_command("git init")
     run_command("git add .")
-    run_command('git commit -m "v.1"')
+    run_command('git commit -m "v1.1"')
     run_command("git branch -M main")
     # Intenta actualizar el remoto si ya existe, si falla, lo añade
     run_command(f"git remote set-url origin {REPO_URL} || git remote add origin {REPO_URL}")

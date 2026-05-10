@@ -1,60 +1,231 @@
-.pitch-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+/* Layout Principal (Sidebar + Cancha) */
+.pitch-wrapper {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: start;
 }
 
-.toolbar {
+/* --- Barra Lateral --- */
+.pitch-sidebar {
+    background: #1a1a1a;
+    color: #f8f8f8;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.pitch-sidebar h2, .pitch-sidebar h3 {
+    color: #e6c27a; /* Dorado */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+/* --- Tarjeta Detalles de Jugador --- */
+.player-details-panel {
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 25px;
+}
+
+.panel-rating {
+    font-size: 1.5rem;
+    color: #e6c27a;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.panel-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.stat-item {
     display: flex;
     justify-content: space-between;
+    background: #111;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.stat-item strong {
+    color: #e6c27a;
+}
+
+.panel-physique {
+    font-size: 0.85rem;
+    color: #aaa;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* --- Área de la Cancha --- */
+.pitch-main {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: #0a0a0a;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .soccer-pitch {
     position: relative;
     width: 100%;
-    height: 600px;
-    background-color: #4caf50;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
-    background-size: 50px 50px;
-    border: 3px solid white;
-    border-radius: 10px;
-    margin: 0 auto;
+    max-width: 650px;
+    aspect-ratio: 2 / 3; /* Mantiene proporción vertical de cancha de fútbol */
+    background: repeating-linear-gradient(
+        0deg,
+        #2e7d32,
+        #2e7d32 10%,
+        #276b2b 10%,
+        #276b2b 20%
+    ); /* Rayas de césped realista */
+    border: 4px solid #fff;
+    border-radius: 6px;
     overflow: hidden;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.4);
+    margin: 0 auto;
 }
 
-.player-card {
+/* Líneas de la Cancha */
+.soccer-pitch::before {
+    content: '';
     position: absolute;
-    width: 80px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    text-align: center;
-    padding: 5px;
-    cursor: grab;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #fff;
+    transform: translateY(-50%);
+}
+
+.soccer-pitch::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid #fff;
+    border-radius: 50%;
     transform: translate(-50%, -50%);
 }
 
-.player-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
+.pitch-lines {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    pointer-events: none;
 }
 
-.player-info {
+.pitch-lines::before, .pitch-lines::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid #fff;
+    width: 55%;
+    height: 16%;
+}
+
+.pitch-lines::before {
+    top: 0;
+    border-top: none;
+}
+
+.pitch-lines::after {
+    bottom: 0;
+    border-bottom: none;
+}
+
+/* --- Nodos de Jugadores (Estilo Premium) --- */
+.player-node {
+    position: absolute;
+    width: 70px;
     display: flex;
     flex-direction: column;
-    font-size: 0.8rem;
-    margin-top: 5px;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    z-index: 10;
+    transition: transform 0.2s ease;
 }
 
-.player-rating {
+.player-node:active {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.player-node.selected .player-jersey {
+    border-color: #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+}
+
+.player-jersey {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at top left, #fbc02d, #f57f17); /* Camiseta dorada por defecto */
+    border: 3px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+    margin-bottom: 5px;
+    background-position: center;
+}
+
+.jersey-number {
+    font-weight: 900;
+    color: #111;
+    font-size: 1.2rem;
+}
+
+.player-name-badge {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
     font-weight: bold;
-    color: #d32f2f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #444;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Media query para móviles */
+@media (max-width: 900px) {
+    .pitch-wrapper {
+        grid-template-columns: 1fr;
+    }
 }

@@ -12,6 +12,8 @@ django-environ>=0.11.2
 Pillow>=10.0.0
 django-allauth>=0.58.2
 requests>=2.0.0
+PyJWT>=2.8.0
+cryptography>=41.0.0
 """,
 
     "core/settings.py": """import os
