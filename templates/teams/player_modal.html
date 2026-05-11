@@ -1,11 +1,36 @@
 <div id="playerModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Editar Jugador</h2>
-        <form id="editPlayerForm" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-            <input type="text" id="playerNameInput" placeholder="Nombre" class="form-control">
-            <input type="number" id="playerRatingInput" placeholder="Valoración (ej. 85)" class="form-control">
-            <button type="submit" class="btn">Guardar Cambios</button>
+    <div class="modal-content fc-theme">
+        <span class="close-modal fc-text-gold">&times;</span>
+        <h2 class="fc-title">Gestión de Carta <span class="fc-badge">GRL: <span id="playerRatingDisplay">-</span></span></h2>
+        
+        <form id="editPlayerForm" class="fc-grid-form">
+            <div class="form-section full-width">
+                <label>Nombre del Jugador:</label>
+                <input type="text" id="playerNameInput" placeholder="Ej. L. Messi" class="form-control fc-input">
+            </div>
+
+            <div class="form-section full-width">
+                <label>Foto del Jugador (Opcional):</label>
+                <input type="file" id="playerPhotoInput" accept="image/*" class="form-control fc-input">
+            </div>
+
+            <div class="form-section"><label>Edad:</label><input type="number" id="playerAgeInput" class="form-control fc-input"></div>
+            <div class="form-section"><label>Altura (m):</label><input type="number" step="0.01" id="playerHeightInput" class="form-control fc-input"></div>
+            <div class="form-section"><label>Peso (kg):</label><input type="number" id="playerWeightInput" class="form-control fc-input"></div>
+            <div class="form-section"><label>Pie Hábil:</label><input type="text" id="playerFootInput" class="form-control fc-input" placeholder="Diestro/Zurdo"></div>
+            
+            <div class="full-width separator"><h4>Atributos Tácticos (FC25)</h4></div>
+            
+            <div class="form-section"><label>Ritmo ⚡:</label><input type="number" id="playerPacInput" class="form-control fc-input stat-input"></div>
+            <div class="form-section"><label>Tiro 🎯:</label><input type="number" id="playerShoInput" class="form-control fc-input stat-input"></div>
+            <div class="form-section"><label>Pase ⚽:</label><input type="number" id="playerPasInput" class="form-control fc-input stat-input"></div>
+            <div class="form-section"><label>Regate 🔥:</label><input type="number" id="playerDriInput" class="form-control fc-input stat-input"></div>
+            <div class="form-section"><label>Defensa 🛡️:</label><input type="number" id="playerDefInput" class="form-control fc-input stat-input"></div>
+            <div class="form-section"><label>Físico 💪:</label><input type="number" id="playerPhyInput" class="form-control fc-input stat-input"></div>
+            
+            <input type="hidden" id="playerRatingInput">
+            
+            <div class="full-width mt-10"><button type="submit" class="btn btn-fc-submit">Guardar Cambios</button></div>
         </form>
     </div>
 </div>

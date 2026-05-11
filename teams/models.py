@@ -39,6 +39,20 @@ class Player(models.Model):
     nationality = models.CharField(max_length=50, blank=True, null=True)
     club = models.CharField(max_length=100, blank=True, null=True)
     
+    # Atributos estilo FC25
+    pace = models.IntegerField(default=70)
+    shooting = models.IntegerField(default=70)
+    passing = models.IntegerField(default=70)
+    dribbling = models.IntegerField(default=70)
+    defending = models.IntegerField(default=70)
+    physical = models.IntegerField(default=70)
+    
+    # Físico y Datos extra
+    age = models.IntegerField(default=21)
+    height = models.FloatField(default=1.80)
+    weight = models.IntegerField(default=75)
+    preferred_foot = models.CharField(max_length=20, default='Diestro')
+
     photo = models.ImageField(upload_to='players/', blank=True, null=True, default='default_player.png')
     
     pitch_x = models.FloatField(default=0.0)
@@ -46,3 +60,10 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        # Auto-calcular el GRL (Rating) como promedio de las 6 estadísticas
+        if getattr(self, 'position', 'MID') != 'GK':
+            stats = [self.pace, self.shooting, self.passing, self.dribbling, self.defending, self.physical]
+            self.rating = sum(stats) // 6
+        super().save(*args, **kwargs)

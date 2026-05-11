@@ -3,8 +3,12 @@
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 25px;
-    max-width: 1400px;
-    margin: 0 auto;
+    /* Truco para romper el límite del contenedor principal y usar toda la pantalla */
+    width: 95vw;
+    max-width: 1800px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     align-items: start;
 }
 
@@ -91,8 +95,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #0a0a0a;
-    padding: 20px;
+    background: transparent; /* Eliminamos el margen negro */
+    padding: 0; /* Quitamos el espaciado para que lo verde tope con los bordes */
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
@@ -100,8 +104,8 @@
 .soccer-pitch {
     position: relative;
     width: 100%;
-    max-width: 650px;
-    aspect-ratio: 2 / 3; /* Mantiene proporción vertical de cancha de fútbol */
+    max-width: 100%; /* Obligamos a la zona verde a expandirse al máximo infinito */
+    aspect-ratio: 4 / 3; /* Formato tipo monitor (más ancho que alto) para tener espacio de sobra */
     background: repeating-linear-gradient(
         0deg,
         #2e7d32,
@@ -110,7 +114,7 @@
         #276b2b 20%
     ); /* Rayas de césped realista */
     border: 4px solid #fff;
-    border-radius: 6px;
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: inset 0 0 50px rgba(0,0,0,0.4);
     margin: 0 auto;
@@ -169,38 +173,40 @@
 /* --- Nodos de Jugadores (Estilo Premium) --- */
 .player-node {
     position: absolute;
-    width: 70px;
+    width: 85px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transform: translate(-50%, -50%);
     cursor: grab;
     z-index: 10;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .player-node:active {
     cursor: grabbing;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.15);
+    z-index: 50;
 }
 
 .player-node.selected .player-jersey {
     border-color: #00ff00;
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
 }
 
 .player-jersey {
-    width: 50px;
-    height: 50px;
-    background: radial-gradient(circle at top left, #fbc02d, #f57f17); /* Camiseta dorada por defecto */
-    border: 3px solid #fff;
+    width: 65px;
+    height: 65px;
+    background: radial-gradient(circle at center, #333, #111);
+    border: 4px solid #e6c27a; /* Borde dorado premium base */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-    margin-bottom: 5px;
-    background-position: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8);
+    margin-bottom: -10px; /* Sobreponer el marco del nombre arriba de la foto */
+    background-position: top center; /* Centrar mejor los rostros */
+    z-index: 1;
 }
 
 .jersey-number {
@@ -210,17 +216,18 @@
 }
 
 .player-name-badge {
-    background: rgba(0, 0, 0, 0.85);
-    color: #fff;
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 12px;
+    background: linear-gradient(180deg, #d4af37, #aa771c); /* Estilo placa de oro */
+    color: #111;
+    font-size: 0.8rem;
+    padding: 4px 14px;
+    border-radius: 6px;
     white-space: nowrap;
-    font-weight: bold;
+    font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border: 1px solid #444;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    border: 2px solid #222;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+    z-index: 2; /* Por encima de la foto */
 }
 
 /* Media query para móviles */

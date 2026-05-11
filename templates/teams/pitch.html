@@ -27,12 +27,12 @@
             <h3 id="panel-name" style="text-align: center; color: #fff; margin-bottom: 5px;">-</h3>
             <div class="panel-rating">GRL: <span id="panel-rating">-</span></div>
             <div class="panel-stats-grid">
-                <div class="stat-item"><span>RIT</span> <strong id="panel-pac">-</strong></div>
-                <div class="stat-item"><span>TIR</span> <strong id="panel-sho">-</strong></div>
-                <div class="stat-item"><span>PAS</span> <strong id="panel-pas">-</strong></div>
-                <div class="stat-item"><span>REG</span> <strong id="panel-dri">-</strong></div>
-                <div class="stat-item"><span>DEF</span> <strong id="panel-def">-</strong></div>
-                <div class="stat-item"><span>FIS</span> <strong id="panel-phy">-</strong></div>
+                <div class="stat-item"><span>Ritmo</span> <strong id="panel-pac">-</strong></div>
+                <div class="stat-item"><span>Tiro</span> <strong id="panel-sho">-</strong></div>
+                <div class="stat-item"><span>Pase</span> <strong id="panel-pas">-</strong></div>
+                <div class="stat-item"><span>Regate</span> <strong id="panel-dri">-</strong></div>
+                <div class="stat-item"><span>Defensa</span> <strong id="panel-def">-</strong></div>
+                <div class="stat-item"><span>Físico</span> <strong id="panel-phy">-</strong></div>
             </div>
             <div class="panel-physique">
                 <p>Edad: <span id="panel-age">-</span> | Altura: <span id="panel-height">-</span>m</p>
@@ -51,7 +51,7 @@
 
     <!-- Área principal de la cancha -->
     <main class="pitch-main">
-        <div class="soccer-pitch" id="pitch">
+        <div class="soccer-pitch" id="pitch" style="position: relative; min-height: 600px; background-color: #2e7d32; border: 3px solid white; overflow: hidden; border-radius: 8px;">
             <div class="pitch-lines"></div>
             {% if players %}
                 {% for player in players %}
@@ -69,7 +69,7 @@
                          data-height="{{ player.height }}"
                          data-weight="{{ player.weight }}"
                          data-foot="{{ player.preferred_foot }}"
-                         style="left: {{ player.pitch_x }}%; top: {{ player.pitch_y }}%;">
+                         style="position: absolute; transform: translate(-50%, -50%); left: {{ player.safe_x }}%; top: {{ player.safe_y }}%;">
                         <div class="player-jersey" style="background-image: url('{{ player.photo.url }}'); background-size: cover;">
                             <span class="jersey-number" style="{% if player.photo %}display:none;{% endif %}">{{ player.rating|default:"99" }}</span>
                         </div>
