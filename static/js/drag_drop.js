@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             player.style.cursor = 'grabbing';
             player.style.zIndex = 1000;
             
+            // Efecto visual al levantar la carta
+            player.style.transform = 'translate(-50%, -50%) scale(1.15) rotate(-3deg)';
+            player.style.transition = 'none'; // Quitar transición para que siga el mouse al instante
+
             // Evitar comportamiento por defecto (como selección de texto o arrastre nativo de imágenes)
             e.preventDefault();
         });
@@ -51,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentDragged) {
             currentDragged.style.cursor = 'grab';
             currentDragged.style.zIndex = '';
+            
+            // Restaurar estilo normal al soltar
+            currentDragged.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)';
+            currentDragged.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         }
         isDragging = false;
         currentDragged = null;

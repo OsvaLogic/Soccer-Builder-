@@ -307,3 +307,43 @@ body {
     margin-top: 5px;
     white-space: nowrap;
 }
+
+/* =========================================
+   --- COMPONENTES DE CARGA (SPINNER) ---
+   ========================================= */
+.loader-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+.loader-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(212, 175, 55, 0.3);
+    border-top-color: #d4af37;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+    margin-bottom: 20px;
+}
+.loader-text {
+    color: #d4af37;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(212,175,55,0.5);
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }

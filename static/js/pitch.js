@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => { toast.classList.remove("show"); }, 3000);
     }
 
+    // --- OVERLAY DE CARGA ---
+    let loaderOverlay = document.createElement('div');
+    loaderOverlay.className = 'loader-overlay';
+    loaderOverlay.innerHTML = '<div class="spinner"></div><div class="loader-text">Procesando...</div>';
+    document.body.appendChild(loaderOverlay);
+
     // --- CALCULADOR DE RAREZAS VISUALES ---
     function updateCardRarity(card, rating) {
         card.classList.remove('card-bronze', 'card-silver', 'card-gold', 'card-special');
@@ -117,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = saveBtn.innerText;
             saveBtn.innerText = 'Guardando...';
             saveBtn.disabled = true;
+            loaderOverlay.classList.add('active');
 
             const playersData = [];
             document.querySelectorAll('.player-node').forEach(card => {
@@ -170,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .finally(() => {
                 saveBtn.innerText = originalText;
                 saveBtn.disabled = false;
+                loaderOverlay.classList.remove('active');
             });
         });
     }
@@ -278,6 +286,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const originalBtnText = submitBtn.innerText;
                 submitBtn.innerText = "Subiendo...";
                 submitBtn.disabled = true;
+                loaderOverlay.querySelector('.loader-text').innerText = "Actualizando...";
+                loaderOverlay.classList.add('active');
 
                 const formData = new FormData();
                 formData.append('name', document.getElementById('playerNameInput').value);
@@ -341,6 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     submitBtn.innerText = originalBtnText;
                     submitBtn.disabled = false;
                     if(photoInput) photoInput.value = ''; // Limpiar el input file
+                    loaderOverlay.classList.remove('active');
+                    setTimeout(() => loaderOverlay.querySelector('.loader-text').innerText = "Procesando...", 300);
                 });
             }
         });
