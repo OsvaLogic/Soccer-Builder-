@@ -20,6 +20,7 @@ call venv\Scripts\activate.bat
 :: 3. Instalar requerimientos (si existe el archivo)
 if exist requirements.txt (
     echo [✔️] Verificando e instalando dependencias (requirements.txt)...
+    python -m pip install --upgrade pip -q
     pip install -r requirements.txt -q
 )
 
@@ -33,8 +34,12 @@ echo [✔️] Verificando e inyectando tacticas en la BD...
 python seed_formations.py
 
 :: 5. Iniciar el servidor y abrir el navegador
-echo [🚀] Levantando el servidor local en http://127.0.0.1:8000/
-start http://127.0.0.1:8000/
-python manage.py runserver
+echo [🚀] Levantando el servidor local...
+:: Arranca el servidor en una nueva ventana
+start "Servidor Django" cmd /c "call venv\Scripts\activate.bat && python manage.py runserver"
 
-pause
+:: Espera un par de segundos y abre el navegador
+timeout /t 3 /nobreak >nul
+start http://127.0.0.1:8000/
+
+echo [✔️] Todo listo. Cierra esta ventana si lo deseas.

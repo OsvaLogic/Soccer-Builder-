@@ -3,7 +3,7 @@ import os
 file_contents = {
     ".env": """DEBUG=True
 SECRET_KEY=django-insecure-tu-clave-secreta-aqui
-DATABASE_URL=postgres://tu_usuario:tu_contraseña@localhost:5432/soccer_db
+# DATABASE_URL=postgres://tu_usuario:tu_contraseña@localhost:5432/soccer_db
 """,
 
     "requirements.txt": """Django>=4.2,<5.0
