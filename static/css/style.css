@@ -19,25 +19,147 @@ body {
     color: var(--text-color);
 }
 
-.navbar {
-    background-color: var(--primary-color);
-    color: white;
+/* --- Mejora Premium de la Barra de Navegación (FC25) --- */
+.navbar.fc-navbar {
+    background: linear-gradient(90deg, #0f0f0f, #1a1a1a);
+    border-bottom: 2px solid #d4af37;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1rem 3rem;
     align-items: center;
+    position: relative;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-text {
+    color: #fff;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
-.nav-links a {
-    color: white;
+.nav-item {
+    color: #f8f8f8;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.nav-item:hover {
+    color: #d4af37;
+    border-bottom: 1px solid #d4af37;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.user-badge {
+    color: #d4af37;
+    border: 1px solid #d4af37;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+.login-btn {
+    background: linear-gradient(90deg, #d4af37, #aa771c);
+    color: #000;
     font-weight: bold;
+    border-radius: 6px;
+}
+
+.login-btn:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.05);
+}
+
+/* --- Menú Hamburguesa --- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 30px;
+    height: 3px;
+    background-color: #d4af37;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .navbar.fc-navbar {
+        padding: 1rem 1.5rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #1a1a1a;
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        border-bottom: 2px solid #d4af37;
+    }
+
+    .nav-links.active {
+        max-height: 400px;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-item {
+        display: block;
+        padding: 15px 0;
+        border-bottom: 1px solid #333;
+    }
+
+    .nav-item:hover {
+        border-bottom: 1px solid #d4af37;
+    }
+    
+    /* Animación del icono hamburguesa al abrir */
+    .hamburger.toggle span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .hamburger.toggle span:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.toggle span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
 }
 
 .container {
