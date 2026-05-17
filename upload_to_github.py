@@ -71,6 +71,20 @@ def main():
     if "--yesterday" in sys.argv:
         sys.argv.remove("--yesterday")
         date_flag = ' --date="yesterday"'
+        
+    # Detectar fecha personalizada (para forzar Committer y Author Date)
+    for arg in sys.argv[:]:
+        if arg.startswith("--date="):
+            sys.argv.remove(arg)
+            custom_date = arg.split("=", 1)[1]
+            date_flag = f' --date="{custom_date}"'
+            os.environ['GIT_COMMITTER_DATE'] = custom_date
+            
+    # Detectar URL de repositorio personalizada
+    for arg in sys.argv[:]:
+        if arg.startswith("--repo="):
+            sys.argv.remove(arg)
+            REPO_URL = arg.split("=", 1)[1]
 
     if len(sys.argv) > 1:
         # Permite al usuario escribir el mensaje sin necesidad de usar comillas
