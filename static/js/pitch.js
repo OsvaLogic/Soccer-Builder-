@@ -28,6 +28,68 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rating < 65) card.classList.add('card-bronze'); else if (rating < 75) card.classList.add('card-silver'); else if (rating < 90) card.classList.add('card-gold'); else card.classList.add('card-special');
     }
 
+    // --- FUNCIÓN DE GUARDADO (Reutilizable para Auto-Save y botón) ---
+    function saveTeamData(isAutoSave = false) {
+        const saveBtn = document.getElementById('save-team-btn');
+        const originalText = saveBtn ? saveBtn.innerText : 'Guardar Plantilla';
+        
+        if (!isAutoSave && saveBtn) {
+            saveBtn.innerText = 'Guardando...';
+            saveBtn.disabled = true;
+            loaderOverlay.classList.add('active');
+        }
+
+        const playersData = [];
+        document.querySelectorAll('.player-node').forEach(card => {
+            const id = card.getAttribute('data-id');
+            if (id) {
+                playersData.push({ 
+                    id: id, 
+                    x: parseFloat(card.style.left) || 0, 
+                    y: parseFloat(card.style.top) || 0,
+                    name: card.getAttribute('data-name'),
+                    rating: card.getAttribute('data-rating'),
+                    pace: card.getAttribute('data-pac'),
+                    shooting: card.getAttribute('data-sho'),
+                    passing: card.getAttribute('data-pas'),
+                    dribbling: card.getAttribute('data-dri'),
+                    defending: card.getAttribute('data-def'),
+                    physical: card.getAttribute('data-phy'),
+                    age: card.getAttribute('data-age'),
+                    height: card.getAttribute('data-height'),
+                    weight: card.getAttribute('data-weight'),
+                    foot: card.getAttribute('data-foot')
+                });
+            }
+        });
+
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+
+        fetch('/save-positions/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+            body: JSON.stringify({ players: playersData })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!isAutoSave) {
+                if (data.status === 'success') showToast("¡Plantilla y Tácticas guardadas exitosamente!", "success");
+                else showToast("Error al guardar: " + data.message, "error");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (!isAutoSave) showToast("Fallo de conexión al guardar la pizarra.", "error");
+        })
+        .finally(() => {
+            if (!isAutoSave && saveBtn) {
+                saveBtn.innerText = originalText;
+                saveBtn.disabled = false;
+                loaderOverlay.classList.remove('active');
+            }
+        });
+    }
+
     const formationSelect = document.getElementById('formation-select');
     const saveBtn = document.getElementById('save-team-btn');
 
@@ -97,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
                 showToast(`Despliegue Táctico ajustado a ${formation}`, "success");
+                // Disparar Auto-guardado al cambiar la formación
+                saveTeamData(true);
             }
         });
     }
@@ -119,66 +183,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (saveBtn) {
-        saveBtn.addEventListener('click', () => {
-            const originalText = saveBtn.innerText;
-            saveBtn.innerText = 'Guardando...';
-            saveBtn.disabled = true;
-            loaderOverlay.classList.add('active');
+        saveBtn.addEventListener('click', () => saveTeamData(false));
+    }
 
-            const playersData = [];
-            document.querySelectorAll('.player-node').forEach(card => {
-                const id = card.getAttribute('data-id');
-                const x = parseFloat(card.style.left) || 0;
-                const y = parseFloat(card.style.top) || 0;
-                if (id) {
-                    playersData.push({ 
-                        id: id, 
-                        x: x, 
-                        y: y,
-                        name: card.getAttribute('data-name'),
-                        rating: card.getAttribute('data-rating'),
-                        pace: card.getAttribute('data-pac'),
-                        shooting: card.getAttribute('data-sho'),
-                        passing: card.getAttribute('data-pas'),
-                        dribbling: card.getAttribute('data-dri'),
-                        defending: card.getAttribute('data-def'),
-                        physical: card.getAttribute('data-phy'),
-                        age: card.getAttribute('data-age'),
-                        height: card.getAttribute('data-height'),
-                        weight: card.getAttribute('data-weight'),
-                        foot: card.getAttribute('data-foot')
-                    });
-                }
-            });
+    // Escuchar el evento de Drag & Drop para activar el Auto-guardado
+    window.addEventListener('playerDropped', () => saveTeamData(true));
 
-            // Obtener token CSRF (Común en Django. Ajustar según el framework)
-            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
-
-            fetch('/save-positions/', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                },
-                body: JSON.stringify({ players: playersData })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    showToast("¡Plantilla y Tácticas guardadas exitosamente!", "success");
-                } else {
-                    showToast("Error al guardar: " + data.message, "error");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showToast("Fallo de conexión al guardar la pizarra.", "error");
-            })
-            .finally(() => {
-                saveBtn.innerText = originalText;
-                saveBtn.disabled = false;
-                loaderOverlay.classList.remove('active');
-            });
+    // --- EXPORTAR A IMAGEN (Compartir Plantilla) ---
+    const exportBtn = document.getElementById('export-team-btn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            const pitchElement = document.getElementById('pitch');
+            const originalText = exportBtn.innerText;
+            exportBtn.innerText = 'Generando...';
+            exportBtn.disabled = true;
+            
+            if (typeof html2canvas !== 'undefined') {
+                html2canvas(pitchElement, { backgroundColor: null, scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'alineacion-soccer-builder.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    showToast("¡Imagen exportada con éxito!", "success");
+                }).catch(err => {
+                    console.error(err);
+                    showToast("Error al exportar la imagen.", "error");
+                }).finally(() => {
+                    exportBtn.innerText = originalText;
+                    exportBtn.disabled = false;
+                });
+            } else {
+                showToast("Librería de exportación no disponible.", "error");
+                exportBtn.innerText = originalText;
+                exportBtn.disabled = false;
+            }
         });
     }
 

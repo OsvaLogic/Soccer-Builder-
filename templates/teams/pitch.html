@@ -19,6 +19,7 @@
                     {% endfor %}
                 </select>
                 <button id="save-team-btn" class="btn btn-block" style="background-color: #2e7d32;">Guardar Plantilla</button>
+                <button id="export-team-btn" class="btn btn-block" style="background-color: #1565c0; margin-top: 10px;">Compartir / Exportar</button>
             </div>
         </div>
         
@@ -91,6 +92,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="{% static 'js/pitch.js' %}"></script>
 <script src="{% static 'js/drag_drop.js' %}"></script>
 {% endblock %}
