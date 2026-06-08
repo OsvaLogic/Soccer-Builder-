@@ -33,6 +33,14 @@ python manage.py migrate
 echo [✔️] Verificando e inyectando tacticas en la BD...
 python seed_formations.py
 
+:: 4.6 Crear carpeta media e imagen por defecto
+if not exist "media\default_player.png" (
+    echo [!] Configurando carpeta media e imagen por defecto...
+    if not exist "media" mkdir media
+    powershell -Command "Invoke-WebRequest -Uri 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y&s=200' -OutFile 'media\default_player.png'"
+    echo [✔️] Imagen por defecto descargada con exito.
+)
+
 :: 5. Iniciar el servidor y abrir el navegador
 echo [🚀] Levantando el servidor local...
 :: Arranca el servidor en una nueva ventana

@@ -10,14 +10,23 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">⚽ Soccer Builder</div>
+        <div class="logo"><a href="/" style="color: inherit; text-decoration: none;">⚽ Soccer Builder</a></div>
+        
+        <!-- Botón de menú para celulares -->
+        <div class="hamburger" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
         <ul class="nav-links">
-            <li><a href="{% url 'teams:pitch' %}">Mi Pizarra</a></li>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'teams:pitch' %}" target="_blank">Mi Pizarra</a></li>
             {% if user.is_authenticated %}
-                <li><a href="#">Mis Plantillas</a></li>
+                <li><a href="{% url 'teams:dashboard' %}">Mis Plantillas</a></li>
                 <li><a href="#">Hola, {{ user.username }}</a></li>
             {% else %}
-                <li><a href="#">Iniciar Sesión</a></li>
+                <li><a href="#" id="open-login-btn">Iniciar Sesión</a></li>
             {% endif %}
         </ul>
     </nav>
@@ -27,7 +36,57 @@
         {% endblock %}
     </main>
 
+    <!-- Modal de Inicio de Sesión -->
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content fc-theme" style="width: 400px;">
+            <span class="close-modal fc-text-gold" id="close-login-modal">&times;</span>
+            <h2 class="fc-title">Iniciar Sesión</h2>
+            
+            <form id="loginForm" method="POST" action="#" class="fc-grid-form" style="display: flex; flex-direction: column;">
+                {% csrf_token %}
+                <div class="form-section">
+                    <label>Usuario o Correo:</label>
+                    <input type="text" name="username" class="form-control fc-input" required>
+                </div>
+                <div class="form-section" style="margin-top: 15px;">
+                    <label>Contraseña:</label>
+                    <input type="password" name="password" class="form-control fc-input" required>
+                </div>
+                <button type="submit" class="btn btn-fc-submit" style="margin-top: 25px;">Entrar a mi cuenta</button>
+            </form>
+        </div>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
+    
+    <script>
+        // Activar el menú en dispositivos móviles
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+            if(hamburger) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('toggle');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Funcionalidad del Modal de Iniciar Sesión
+            const loginBtn = document.getElementById('open-login-btn');
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginBtn = document.getElementById('close-login-modal');
+
+            if (loginBtn && loginModal) {
+                loginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginModal.style.display = 'flex';
+                });
+                closeLoginBtn.addEventListener('click', () => {
+                    loginModal.style.display = 'none';
+                });
+            }
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

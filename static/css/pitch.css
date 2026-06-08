@@ -10,21 +10,28 @@
     left: 50%;
     transform: translateX(-50%);
     align-items: start;
+    margin-top: 100px; /* Espacio para el nuevo navbar flotante */
+    padding-bottom: 40px;
 }
 
 /* --- Barra Lateral --- */
 .pitch-sidebar {
-    background: #1a1a1a;
+    background: linear-gradient(145deg, rgba(20, 20, 22, 0.85), rgba(10, 10, 12, 0.95));
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    position: relative;
+    z-index: 100; /* Obliga a la barra a estar por encima del "cristal invisible" */
     color: #f8f8f8;
-    border-radius: 12px;
+    border-radius: 24px;
     padding: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
 .pitch-sidebar h2, .pitch-sidebar h3 {
     color: #e6c27a; /* Dorado */
     margin-bottom: 20px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 10px;
     font-size: 1.3rem;
     text-transform: uppercase;
@@ -39,20 +46,70 @@
 }
 
 .form-control {
-    background-color: #333;
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
-    border: 1px solid #555;
-    padding: 12px;
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
 }
+
+.form-control:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    outline: none;
+}
+
+/* --- Botones de la barra lateral --- */
+.pitch-sidebar .btn-block {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 14px;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-top: 12px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* Evita que hacer clic en el ícono confunda al JavaScript */
+.pitch-sidebar .btn-block svg {
+    pointer-events: none;
+}
+
+/* Efecto Físico de Presión (Click) */
+.pitch-sidebar .btn-block:active {
+    transform: scale(0.96);
+}
+
+/* Estilos Individuales */
+#save-team-btn { border-color: rgba(46, 125, 50, 0.5); color: #81c784; }
+#save-team-btn:hover { background: linear-gradient(90deg, #1b5e20, #2e7d32); border-color: #4caf50; color: #fff; box-shadow: 0 5px 20px rgba(46, 125, 50, 0.5); }
+
+#export-team-btn { border-color: rgba(21, 101, 192, 0.5); color: #64b5f6; }
+#export-team-btn:hover { background: linear-gradient(90deg, #0d47a1, #1565c0); border-color: #42a5f5; color: #fff; box-shadow: 0 5px 20px rgba(21, 101, 192, 0.5); }
+
+#edit-selected-btn { border-color: rgba(212, 175, 55, 0.5); color: #e6c27a; margin-top: 20px;}
+#edit-selected-btn:hover { background: linear-gradient(90deg, #aa771c, #d4af37); border-color: #fbc02d; color: #000; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5); }
 
 /* --- Tarjeta Detalles de Jugador --- */
 .player-details-panel {
-    background: #222;
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
     margin-bottom: 25px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
 
 .panel-rating {
@@ -73,14 +130,17 @@
 .stat-item {
     display: flex;
     justify-content: space-between;
-    background: #111;
+    background: rgba(0, 0, 0, 0.6);
     padding: 8px 12px;
-    border-radius: 4px;
+    border-radius: 12px;
     font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .stat-item strong {
     color: #e6c27a;
+    font-weight: 900;
 }
 
 .panel-physique {
@@ -93,6 +153,7 @@
 /* --- Área de la Cancha --- */
 .pitch-main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: transparent; /* Eliminamos el margen negro */
@@ -105,18 +166,20 @@
     position: relative;
     width: 100%;
     max-width: 100%; /* Obligamos a la zona verde a expandirse al máximo infinito */
-    aspect-ratio: 4 / 3; /* Formato tipo monitor (más ancho que alto) para tener espacio de sobra */
-    background: repeating-linear-gradient(
-        0deg,
-        #2e7d32,
-        #2e7d32 10%,
-        #276b2b 10%,
-        #276b2b 20%
-    ); /* Rayas de césped realista */
-    border: 4px solid #fff;
+    aspect-ratio: 16 / 10; /* Formato más panorámico y moderno para PC */
+    background: 
+        radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%),
+        repeating-linear-gradient(
+            0deg,
+            #1a4720,
+            #1a4720 10%,
+            #143819 10%,
+            #143819 20%
+        ); /* Rayas de césped con iluminación de foco de estadio (3D) */
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 100px rgba(0,0,0,0.8);
     margin: 0 auto;
 }
 
@@ -128,7 +191,8 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
     transform: translateY(-50%);
 }
 
@@ -139,7 +203,8 @@
     left: 50%;
     width: 25%;
     aspect-ratio: 1 / 1;
-    border: 2px solid #fff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
@@ -155,7 +220,8 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    border: 2px solid #fff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.2);
     width: 55%;
     height: 16%;
 }
@@ -231,8 +297,26 @@
 }
 
 /* Media query para móviles */
-@media (max-width: 900px) {
+@media (max-width: 992px) {
     .pitch-wrapper {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        width: 96vw;
+        margin-top: 85px;
+        gap: 20px;
+    }
+    
+    .pitch-main {
+        order: 1; /* Mágia: La cancha sube y aparece PRIMERO en móviles */
+        width: 100%;
+    }
+    
+    .pitch-sidebar {
+        order: 2; /* La barra lateral y stats bajan, después de la cancha */
+        width: 100%;
+    }
+    
+    .soccer-pitch {
+        aspect-ratio: 4 / 5; /* Formato vertical tipo App de celular */
     }
 }

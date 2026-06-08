@@ -2,13 +2,57 @@
 {% load static %}
 
 {% block content %}
-<div class="home-container">
-    <div class="hero-section">
-        <h1>Bienvenido a Soccer Builder</h1>
-        <p>Arma tu equipo de ensueño, diseña tácticas y domina la cancha como un profesional.</p>
-        <div class="home-actions">
-            <a href="{% url 'teams:pitch' %}" class="btn btn-large">Crear Nueva Plantilla</a>
-            <a href="{% url 'teams:dashboard' %}" class="btn btn-large btn-secondary">Ver Mis Plantillas</a>
+<div class="home-layout">
+    <!-- Columna Izquierda: Bienvenida -->
+    <div class="home-container">
+        <div class="hero-section">
+            <h1>Bienvenido a Soccer Builder</h1>
+            <p>Arma tu equipo de ensueño, diseña tácticas y domina la cancha como un profesional.</p>
+            <div class="home-actions">
+                <a href="{% url 'teams:pitch' %}" class="btn btn-large" target="_blank">Crear Nueva Plantilla</a>
+                <a href="{% url 'teams:dashboard' %}" class="btn btn-large btn-secondary">Mis Plantillas</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Columna Derecha: Ranking Global -->
+    <div class="ranking-container">
+        <h2 class="fc-title" style="margin-bottom: 20px;">Top Jugadores Globales</h2>
+        
+        <div class="ranking-item">
+            <span class="rank-pos">1</span>
+            <div class="rank-info">
+                <span class="rank-name">K. Mbappé</span>
+                <span class="rank-stats">RIT 97 | TIR 90 | PAS 80 | REG 92</span>
+            </div>
+            <span class="rank-grl">91</span>
+        </div>
+
+        <div class="ranking-item">
+            <span class="rank-pos">2</span>
+            <div class="rank-info">
+                <span class="rank-name">E. Haaland</span>
+                <span class="rank-stats">RIT 89 | TIR 93 | PAS 66 | REG 80</span>
+            </div>
+            <span class="rank-grl">91</span>
+        </div>
+
+        <div class="ranking-item">
+            <span class="rank-pos">3</span>
+            <div class="rank-info">
+                <span class="rank-name">K. De Bruyne</span>
+                <span class="rank-stats">RIT 72 | TIR 85 | PAS 94 | REG 87</span>
+            </div>
+            <span class="rank-grl">91</span>
+        </div>
+
+        <div class="ranking-item">
+            <span class="rank-pos">4</span>
+            <div class="rank-info">
+                <span class="rank-name">L. Messi</span>
+                <span class="rank-stats">RIT 80 | TIR 87 | PAS 90 | REG 94</span>
+            </div>
+            <span class="rank-grl">90</span>
         </div>
     </div>
 </div>
