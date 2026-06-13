@@ -5,54 +5,63 @@
 <div class="home-layout">
     <!-- Columna Izquierda: Bienvenida -->
     <div class="home-container">
-        <div class="hero-section">
-            <h1>Bienvenido a Soccer Builder</h1>
-            <p>Arma tu equipo de ensueño, diseña tácticas y domina la cancha como un profesional.</p>
+        <div class="hero-section" style="background: linear-gradient(135deg, rgba(22,22,22,0.9) 0%, rgba(34,34,34,0.9) 100%); padding: 50px 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;">
+            <!-- Elemento decorativo de fondo -->
+            <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(226,183,20,0.15) 0%, rgba(0,0,0,0) 70%); border-radius: 50%;"></div>
+            
+            <h1 style="font-size: 3.5rem; font-weight: 800; background: linear-gradient(to right, #ffffff, #e2b714); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;">Bienvenido a Soccer Builder</h1>
+            <p style="font-size: 1.2rem; color: #ccc; line-height: 1.6; margin-bottom: 35px; max-width: 600px;">Arma tu equipo de ensueño, diseña tácticas y domina la cancha como un profesional. La herramienta definitiva para directores técnicos y fanáticos.</p>
             <div class="home-actions">
-                <a href="{% url 'teams:pitch' %}" class="btn btn-large" target="_blank">Crear Nueva Plantilla</a>
-                <a href="{% url 'teams:dashboard' %}" class="btn btn-large btn-secondary">Mis Plantillas</a>
+                <a href="{% url 'teams:pitch' %}" class="btn btn-large" target="_blank" style="box-shadow: 0 4px 15px rgba(226,183,20,0.3);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Iniciar Pizarra
+                </a>
+                <a href="{% url 'teams:dashboard' %}" class="btn btn-large btn-secondary" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">Mis Plantillas</a>
             </div>
         </div>
     </div>
 
     <!-- Columna Derecha: Ranking Global -->
-    <div class="ranking-container">
-        <h2 class="fc-title" style="margin-bottom: 20px;">Top Jugadores Globales</h2>
+    <div class="ranking-container" style="background: rgba(0,0,0,0.3); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05);">
+        <h2 class="fc-title" style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2b714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15l-3 4-3-4"></path><path d="M12 9l3-4 3 4"></path><path d="M2 12h20"></path></svg>
+            Top Jugadores Globales
+        </h2>
         
-        <div class="ranking-item">
-            <span class="rank-pos">1</span>
+        <div class="ranking-item" style="transition: transform 0.2s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <span class="rank-pos" style="background: #e2b714; color: #000; box-shadow: 0 0 10px rgba(226,183,20,0.5);">1</span>
             <div class="rank-info">
-                <span class="rank-name">K. Mbappé</span>
-                <span class="rank-stats">RIT 97 | TIR 90 | PAS 80 | REG 92</span>
+                <span class="rank-name" style="font-weight: bold;">K. Mbappé</span>
+                <span class="rank-stats" style="color: #aaa; font-size: 0.85em;">RIT 97 &bull; TIR 90 &bull; PAS 80 &bull; REG 92</span>
             </div>
-            <span class="rank-grl">91</span>
+            <span class="rank-grl" style="font-weight: 900; font-size: 1.2em;">91</span>
         </div>
 
-        <div class="ranking-item">
-            <span class="rank-pos">2</span>
+        <div class="ranking-item" style="transition: transform 0.2s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <span class="rank-pos" style="background: #c0c0c0; color: #000;">2</span>
             <div class="rank-info">
-                <span class="rank-name">E. Haaland</span>
-                <span class="rank-stats">RIT 89 | TIR 93 | PAS 66 | REG 80</span>
+                <span class="rank-name" style="font-weight: bold;">E. Haaland</span>
+                <span class="rank-stats" style="color: #aaa; font-size: 0.85em;">RIT 89 &bull; TIR 93 &bull; PAS 66 &bull; REG 80</span>
             </div>
-            <span class="rank-grl">91</span>
+            <span class="rank-grl" style="font-weight: 900; font-size: 1.2em;">91</span>
         </div>
 
-        <div class="ranking-item">
-            <span class="rank-pos">3</span>
+        <div class="ranking-item" style="transition: transform 0.2s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <span class="rank-pos" style="background: #cd7f32; color: #000;">3</span>
             <div class="rank-info">
-                <span class="rank-name">K. De Bruyne</span>
-                <span class="rank-stats">RIT 72 | TIR 85 | PAS 94 | REG 87</span>
+                <span class="rank-name" style="font-weight: bold;">K. De Bruyne</span>
+                <span class="rank-stats" style="color: #aaa; font-size: 0.85em;">RIT 72 &bull; TIR 85 &bull; PAS 94 &bull; REG 87</span>
             </div>
-            <span class="rank-grl">91</span>
+            <span class="rank-grl" style="font-weight: 900; font-size: 1.2em;">91</span>
         </div>
 
-        <div class="ranking-item">
-            <span class="rank-pos">4</span>
+        <div class="ranking-item" style="transition: transform 0.2s; cursor: default;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <span class="rank-pos" style="background: #333; color: #fff;">4</span>
             <div class="rank-info">
-                <span class="rank-name">L. Messi</span>
-                <span class="rank-stats">RIT 80 | TIR 87 | PAS 90 | REG 94</span>
+                <span class="rank-name" style="font-weight: bold;">L. Messi</span>
+                <span class="rank-stats" style="color: #aaa; font-size: 0.85em;">RIT 80 &bull; TIR 87 &bull; PAS 90 &bull; REG 94</span>
             </div>
-            <span class="rank-grl">90</span>
+            <span class="rank-grl" style="font-weight: 900; font-size: 1.2em;">90</span>
         </div>
     </div>
 </div>

@@ -9,6 +9,11 @@
     <!-- Barra lateral (Estilo Premium) -->
     <aside class="pitch-sidebar">
         <div class="sidebar-header">
+            <!-- Nuevo: Resumen de GRL del Equipo -->
+            <div class="team-stats-summary" style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; border: 1px solid #e2b714; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                <h4 style="margin: 0; color: #ccc; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Valoración Global</h4>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #e2b714; text-shadow: 0 2px 4px rgba(0,0,0,0.5);" id="team-overall-rating">--</div>
+            </div>
             <h2>Tácticas y Ajustes</h2>
             <div class="controls">
                 {% csrf_token %}
@@ -29,6 +34,10 @@
                 <button id="export-team-btn" class="btn btn-block">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     Descargar Cancha
+                </button>
+                <button id="reset-pitch-btn" class="btn btn-block" style="background-color: transparent; border: 1px solid #dc3545; color: #dc3545; transition: 0.3s; margin-top: 10px;" onmouseover="this.style.backgroundColor='#dc3545'; this.style.color='#fff';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#dc3545';">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Limpiar Cancha
                 </button>
             </div>
         </div>
